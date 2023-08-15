@@ -20,7 +20,7 @@ while True:
             pygame.quit()
             exit()
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_RIGHT] and man.x < 1220 - man.width - man.vel:
+    if keys[pygame.K_d] and man.x < 1220 - man.width - man.vel:
         bg_x -= 10
         game_speed += 0.025
         win.fill("white")
