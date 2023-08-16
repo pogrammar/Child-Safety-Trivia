@@ -1,5 +1,7 @@
 import pygame
 from sprites.player import Player
+from sprites.obstacle import Obstacles
+import random
 
 pygame.init()
 
@@ -8,9 +10,9 @@ clock = pygame.time.Clock()
 bg = pygame.image.load('assets/bg.png').convert_alpha()
 bg_x = 0
 game_speed = 10
-
-
 man = Player(10, 430, 100, 100)
+obstacles_Rand= ["cone", "rocket"]
+obstacle = Obstacles(random.choice(obstacles_Rand), 100, 100)
 
 while True:
     win.blit(bg, (0, 0))
@@ -35,23 +37,27 @@ while True:
         man.standing = True
         man.walkCount = 0
         
-    if not(man.isJump):
+    if not man.isJump:
         if keys[pygame.K_SPACE]:
             man.isJump = True
             man.right = False
             man.left = False
             man.walkCount = 0
+            
     else:
         if man.jumpCount >= -10:
+            global neg
             neg = 1
             if man.jumpCount < 0:
                 neg = -1
-            man.y -= (man.jumpCount ** 2) * 0.3 * neg
+            man.y -= (man.jumpCount ** 2) * 0.4 * neg
             man.jumpCount -= 1
+
         else:
+            
             man.isJump = False
             man.jumpCount = 10
-
+    obstacle.draw()
     man.draw(win)
     clock.tick(60)
     pygame.display.update()
