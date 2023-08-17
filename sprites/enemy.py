@@ -3,8 +3,8 @@ screen = pygame.display.set_mode((1280, 720))
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, width, height):
-        self.x = 150
-        self.y = 450
+        self.x = 10
+        self.y = 320
         self.width = width
         self.height = height
         self.run = [pygame.transform.scale(pygame.image.load(f'assets/Enemy/1.png'), (self.width, self.height)),
@@ -33,7 +33,6 @@ class Enemy(pygame.sprite.Sprite):
         self.jump_delay_counter = 0
 
     def draw(self,screen, player_x):
-        self.move_towards_player(player_x)
         if self.walkCount + 1 >= 27:
             self.walkCount = 0
         if self.right or self.isJump:
@@ -45,8 +44,4 @@ class Enemy(pygame.sprite.Sprite):
         if self.jump_delay_counter >= self.jump_delay:
             self.isJump = True
             self.jump_delay_counter = 0
-    def move_towards_player(self, player_x):
-        if self.x < player_x:
-            self.x += self.vel
-        elif self.x > player_x:
-            self.x -= self.vel
+  

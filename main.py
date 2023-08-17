@@ -3,16 +3,29 @@ import os
 from random import *
 import random
 from sys import exit
+import time
 from sprites.player import Player
 from sprites.enemy import Enemy
+
 pygame.init()
+player = Player(100, 100) 
+enemy = Enemy(200, 200)
 screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
+
+start = 5
+death_screen = pygame.transform.scale(pygame.image.load('assets/final_screen.png'), (200,200))
+finished = False
+counter, text = 100, '100'.rjust(3)
+pygame.time.set_timer(pygame.USEREVENT, 1000)
+font = pygame.font.SysFont('Consolas', 30)
+finished_text = font.render('Mission Complete!', True, 'black')
 
 crate_img = pygame.transform.scale(pygame.image.load('assets/obstacles/crate1.png'), (50, 50)).convert_alpha()
 dustbin_img = pygame.image.load('assets/obstacles/dustbin.png').convert_alpha()
 
 bg= pygame.image.load('assets/bg.png')
+
 def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rect in obstacle_list:
@@ -24,8 +37,13 @@ def obstacle_movement(obstacle_list):
         obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x  > -100]
         return obstacle_list
     else: return []
-
+def collision(player, obstacles):
+    if obstacles:
+        for obstacle_rect in obstacles:
+            if player.rect.colliderect(obstacle_rect):
+                print('hello world')
 obstacle_rect_list = []
+
 
 
 
@@ -33,21 +51,29 @@ obstacle_rect_list = []
 
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, random.randrange(900 , 2500))
-player = Player(100, 100) 
-enemy = Enemy(200, 200)
+
 run = True
+game_active = True
+
 while run:
     keys = pygame.key.get_pressed()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
+
+
         if event.type == obstacle_timer:
             if randint(0, 2):
                 obstacle_rect_list.append(crate_img.get_rect(bottomright=(randint(1000, 2000), 530)))
             else:
                 obstacle_rect_list.append(dustbin_img.get_rect(bottomright=(randint(1000, 1500), 535)))
+        if event.type == pygame.USEREVENT:
+            counter -= 1
+            text = str(counter).rjust(3) if counter > 0 else 'boom!'
 
+    
     if keys[pygame.K_d] and player.x < 1220 - player.width - player.vel:
         player.right = True
         player.standing = False
@@ -95,9 +121,18 @@ while run:
         else:
             screen.blit(dustbin_img, obstacle_rect)
     obstacle_rect_list = [obstacle for obstacle in obstacle_rect_list if obstacle.x > -100]
-
+    start -= 0.025
+    if start <=0:
+        finished = True
+   
+    collision(player, obstacle_rect_list)
     player.draw(screen)
     enemy.draw(screen, player.x)
+    screen.blit(font.render(text, True, (0, 0, 0)), (32, 48))
+    
+    
+    
+
     pygame.display.update()
     clock.tick(60)
 

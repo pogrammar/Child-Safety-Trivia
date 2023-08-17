@@ -5,7 +5,7 @@ screen = pygame.display.set_mode((1280, 720))
 class Player(pygame.sprite.Sprite):
     def __init__(self, width, height) -> None:
         self.x = 200
-        self.y = 450
+        self.y = 440
         self.width = width
         self.height = height
         self.run = [pygame.transform.scale(pygame.image.load(f'assets/player/running/1.png'), (self.width, self.height)),
@@ -30,7 +30,6 @@ class Player(pygame.sprite.Sprite):
                      pygame.transform.scale(pygame.image.load(f'assets/player/jumping/11.png'), (self.width, self.height))
                      ]
         
-        self.state_run = True
         self.state_jump = False
         self.state_duck = False
         self.step_index_running = 0
@@ -45,7 +44,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y # set x and y of rect to x and y of image
         self.jumpCount = 10
         self.walkCount = 0
-        self.vel = 5
+        self.gravity = 1
+        self.jump_height = 10
+
+        self.vel = self.jump_height
                     
     def draw(self,screen):
         if self.walkCount + 1 >= 27:
