@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
 start = 5
-death_screen = pygame.transform.scale(pygame.image.load('assets/final_screen.png'), (200,200))
+death_screen = pygame.transform.scale(pygame.image.load('assets/lose.png'), (200,200))
 finished = False
 counter, text = 100, '100'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
