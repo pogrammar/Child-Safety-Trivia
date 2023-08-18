@@ -51,7 +51,5 @@ class Player(pygame.sprite.Sprite):
 
         if self.isJump:
             screen.blit(self.jump[self.walkCount // 3 % len(self.jump)], (self.x, self.y))
-            self.gravity += 1
-            self.rect.y += self.gravity
             self.walkCount += 1
         self.hitbox = (self.x + 20, self.y + 11, 45, 70)
