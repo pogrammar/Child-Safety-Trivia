@@ -38,7 +38,7 @@ child_safety_questions = {
         "correct_answer": "Find a trusted adult"
     },
     "Q3": {
-        "question": "Q3) Why is it important to wear a helmet when riding a bike?",
+        "question": "Q3) Why is it important to wear a helmet when riding a cycle?",
         "options": ["Because it looks cool", "To protect your head in case of a fall", "To carry things on your head", "To see better"],
         "correct_answer": "To protect your head in case of a fall"
     },
@@ -80,8 +80,6 @@ child_safety_questions = {
 }
 
 
-
-
 def display_question(question_data, hovered_option):
     question = question_data["question"]
     options = question_data["options"]
@@ -105,9 +103,8 @@ def display_question(question_data, hovered_option):
         y_position += 60
 
     pygame.display.flip()
+    
 question_index = 0
-
-
 player = Player(100, 100) 
 enemy = Enemy(200, 200)
 current_question_index = 0
@@ -180,39 +177,18 @@ while True:
                     enemy.x += 100
                     crate_img_x = 1280
                     
-
     screen.blit(bg, (0, 0))
+
 
     if current_question_index < len(questions):
         display_question(questions[current_question_index], hovered_option)
-    else:
-        # Display game over or next level screen
-        pass
+  
 
-    if not player.isJump:
-        if keys[pygame.K_SPACE]:
-            player.isJump = True
-            player.right = False
-            player.walkCount = 0
+ 
 
-    else:
-        if player.jumpCount >= -10:
-            neg = 1
-            if player.jumpCount < 0:
-                neg = -1
-            player.y -= (player.jumpCount ** 2) * 0.4 * neg
-            player.jumpCount -= 1
-        else:
-            player.isJump = False
-            player.jumpCount = 10
-    
     player.draw(screen)
     player.right = True
-    player.standing = False
-
     enemy.draw(screen)
-    enemy.right = True
-    enemy.standing = False
     finish()
     check_collision()
     pygame.display.update()
