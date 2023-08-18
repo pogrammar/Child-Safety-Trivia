@@ -4,6 +4,7 @@ screen = pygame.display.set_mode((1280, 720))
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, width, height):
+        super().__init__()
         self.x = 10
         self.y = 320
         self.width = width
@@ -22,8 +23,11 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()  # rect of the first image of the list
         self.rect.x = self.x
         self.rect.y = self.y  # set x and y of rect to x and y of image
+        self.hitbox = (self.x + 55, self.y + 70, 70, 170)
+        self.rect = pygame.draw.rect(screen, (255,0,0), self.hitbox,2)
 
     def draw(self, screen):
         if self.state_run:
             screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
             self.walkCount += 1
+            self.hitbox = (self.x + 55, self.y + 70, 70, 170)

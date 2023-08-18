@@ -4,9 +4,11 @@ screen = pygame.display.set_mode((1280, 720))
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, width, height) -> None:
+        super().__init__()
         self.x = 200
         self.y = 440
         self.width = width
+        
         self.height = height
         self.run = [
             pygame.transform.scale(pygame.image.load(f'assets/player/running/1.png'), (self.width, self.height)),
@@ -32,14 +34,13 @@ class Player(pygame.sprite.Sprite):
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/11.png'), (self.width, self.height))
         ]
         self.image = self.run[0]  # the first image of the list is the standing image
-        self.rect = self.image.get_rect()  # rect of the first image of the list
-        self.rect.x = self.x
-        self.rect.y = self.y  # set x and y of rect to x and y of image
+          # set x and y of rect to x and y of image
         self.isJump = False
         self.right = True
         self.jumpCount = 10
         self.walkCount = 0
         self.gravity = 0
+        self.hitbox = (self.x + 20, self.y + 11, 45, 70)
         
     def draw(self, screen):
         if self.walkCount + 1 >= 27:
@@ -53,3 +54,4 @@ class Player(pygame.sprite.Sprite):
             self.gravity += 1
             self.rect.y += self.gravity
             self.walkCount += 1
+        self.hitbox = (self.x + 20, self.y + 11, 45, 70)

@@ -8,8 +8,6 @@ pygame.init()
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
 HOVER_COLOR = (200, 200, 200) 
 clock = pygame.time.Clock()
 # Set up the display
@@ -21,6 +19,9 @@ font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
 crate_img = pygame.transform.scale(pygame.image.load('assets/obstacles/crate1.png'), (50, 50)).convert_alpha()
 dustbin_img = pygame.image.load('assets/obstacles/dustbin.png').convert_alpha()
+
+
+
 
 def obstacle_movement(obstacle_list):
     if obstacle_list:
@@ -90,7 +91,9 @@ child_safety_questions = {
     }
 }
 
- 
+
+
+
 def display_question(question_data, hovered_option):
     question = question_data["question"]
     options = question_data["options"]
@@ -121,6 +124,23 @@ player = Player(100, 100)
 enemy = Enemy(200, 200)
 current_question_index = 0
 questions = list(child_safety_questions.values())
+
+all_sprites = pygame.sprite.Group()
+enemy_sprites = pygame.sprite.Group()
+player_sprite = pygame.sprite.GroupSingle()
+
+enemy = Enemy(200, 200)
+enemy_sprites.add(enemy)
+all_sprites.add(enemy)
+
+player = Player(100, 100)
+player_sprite.add(player)
+all_sprites.add(player)
+def check_collision():
+    if player.hitbox[1] < enemy.hitbox[1] + enemy.hitbox[3] and enemy.hitbox[1] + enemy.hitbox[3] > enemy.hitbox[1]:
+            if player.hitbox[0] + player.hitbox[2] > enemy.hitbox[0] and player.hitbox[0] < enemy.hitbox[0] + enemy.hitbox[2]:
+                print('sdsd')
+
 
 while True:
     keys = pygame.key.get_pressed()
@@ -200,9 +220,8 @@ while True:
     enemy.draw(screen)
     enemy.right = True
     enemy.standing = False
-
+    check_collision()
     obstacle_rect_list = obstacle_movement(obstacle_rect_list)
-
     pygame.display.update()
     clock.tick(60)
     
