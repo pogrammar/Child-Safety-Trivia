@@ -1,4 +1,5 @@
 import pygame
+import random
 screen = pygame.display.set_mode((1280, 720))
 
 
@@ -29,10 +30,6 @@ class Player(pygame.sprite.Sprite):
                      pygame.transform.scale(pygame.image.load(f'assets/player/jumping/10.png'), (self.width, self.height)),
                      pygame.transform.scale(pygame.image.load(f'assets/player/jumping/11.png'), (self.width, self.height))
                      ]
-        
-        self.state_jump = False
-        self.state_duck = False
-        self.step_index_running = 0
         self.char = pygame.transform.scale(pygame.image.load(f'assets/player/standing.png'), (self.width, self.height))
         self.isJump = False
         self.right = True
@@ -44,22 +41,23 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y # set x and y of rect to x and y of image
         self.jumpCount = 10
         self.walkCount = 0
-        self.gravity = 1
-        self.jump_height = 10
-
+        self.jump_height = 10 # Adjust this value to control animation speed
+        self.last_update_time = pygame.time.get_ticks()
+        self.gravity = 0
         self.vel = self.jump_height
-                    
-    def draw(self,screen):
+        
+    def draw(self, screen):
         if self.walkCount + 1 >= 27:
             self.walkCount = 0
-        if not self.standing:
-            if self.right:
-                screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
-                self.walkCount += 1
-            if self.isJump:
-                screen.blit(self.jump[self.walkCount // 3 % len(self.jump)], (self.x, self.y))
-        else:
-            screen.blit(self.char, (self.x, self.y))
+        if self.right:
+            screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
+            self.walkCount += 1
+
+        if self.isJump:
+            screen.blit(self.jump[self.walkCount // 3 % len(self.jump)], (self.x, self.y))
+            self.gravity += 1
+            self.rect.y += self.gravity
+            self.walkCount += 1
         
 
 
