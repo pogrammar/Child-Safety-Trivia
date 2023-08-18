@@ -2,6 +2,7 @@ import pygame
 import sys
 from sprites.player import Player
 from sprites.enemy import Enemy
+import time
 # Initialize Pygame
 pygame.init()
 
@@ -15,27 +16,14 @@ screen = pygame.display.set_mode((1280, 720))
 bg = pygame.display.set_caption("Child Safety Trivia")
 
 # Define fonts
+win = pygame.image.load('assets/you_win.png').convert_alpha()
+lose = pygame.image.load('assets/lose.png').convert()
 font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
-crate_img = pygame.transform.scale(pygame.image.load('assets/obstacles/crate1.png'), (50, 50)).convert_alpha()
-dustbin_img = pygame.image.load('assets/obstacles/dustbin.png').convert_alpha()
 
-
-
-
-def obstacle_movement(obstacle_list):
-    if obstacle_list:
-        for obstacle_rect in obstacle_list:
-            obstacle_rect.x -= 10
-            if obstacle_rect.bottom == 530:
-                screen.blit(crate_img, obstacle_rect)
-            else:
-                screen.blit(dustbin_img, obstacle_rect)
-        obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x  > -100]
-        return obstacle_list
-    else: return []
-
-obstacle_rect_list = []
+def finish():
+    if player.x > 1280:
+        screen.blit(win, (0,0))
 
 
 child_safety_questions = {
@@ -139,7 +127,10 @@ all_sprites.add(player)
 def check_collision():
     if player.hitbox[1] < enemy.hitbox[1] + enemy.hitbox[3] and enemy.hitbox[1] + enemy.hitbox[3] > enemy.hitbox[1]:
             if player.hitbox[0] + player.hitbox[2] > enemy.hitbox[0] and player.hitbox[0] < enemy.hitbox[0] + enemy.hitbox[2]:
-                print('sdsd')
+                enemy.state_run = False
+                player.right = False
+                screen.blit(lose, (0,0))
+
 
 
 while True:
@@ -148,6 +139,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+
         if event.type == pygame.MOUSEMOTION:
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -180,12 +173,12 @@ while True:
                 
                 if chosen_option == correct_answer and 150 <= mouse_y <= 350:
                     current_question_index += 1
-                    player.x += 100
+                    player.x += 110
+                    finish()
 
                 else:
                     enemy.x += 100
-                    obstacle_rect = crate_img.get_rect(midtop=(1280, 500))
-                    obstacle_rect_list.append(obstacle_rect)
+                    crate_img_x = 1280
                     
 
     screen.blit(bg, (0, 0))
@@ -220,8 +213,8 @@ while True:
     enemy.draw(screen)
     enemy.right = True
     enemy.standing = False
+    finish()
     check_collision()
-    obstacle_rect_list = obstacle_movement(obstacle_rect_list)
     pygame.display.update()
     clock.tick(60)
     
