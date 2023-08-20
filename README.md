@@ -4,7 +4,7 @@
 Welcome to the **Child Safety Trivia Game**, where you'll navigate through challenging questions and escape from a kidnapper while learning important child safety lessons. In this game, you'll need to make quick decisions and answer correctly to outsmart your captor and ensure your escape.
 
 
-![Game snapshot](https://github.com/pogrammar/Child-Safety-Trivia/blob/master/assets/Snapshot.png)
+![Game snapshot]([https://github.com/pogrammar/Child-Safety-Trivia/blob/master/assets/Snapshot.png])
 
 
 
