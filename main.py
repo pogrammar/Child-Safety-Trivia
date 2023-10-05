@@ -17,7 +17,7 @@ bg = pygame.display.set_caption("Child Safety Trivia")
 
 # Define fonts
 win = pygame.image.load('assets/you_win.png').convert_alpha()
-lose = pygame.image.load('assets/lose.png').convert()
+lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
 
