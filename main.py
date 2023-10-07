@@ -2,7 +2,7 @@ import pygame
 import sys
 from sprites.player import Player
 from sprites.enemy import Enemy
-import time
+from pygame.locals import RESIZABLE
 # Initialize Pygame
 pygame.init()
 
@@ -12,7 +12,7 @@ BLACK = (0, 0, 0)
 HOVER_COLOR = (200, 200, 200) 
 clock = pygame.time.Clock()
 # Set up the display
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((1280, 720), RESIZABLE)
 bg = pygame.display.set_caption("Child Safety Trivia")
 
 # Define fonts
@@ -139,6 +139,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+            
+        if event.type == pygame.VIDEORESIZE:
+            # Handle window resizing event
+            new_width, new_height = event.size
+            # Adjust your game's content to fit the new window dimensions
+            screen = pygame.display.set_mode((new_width, new_height), RESIZABLE)
 
 
         if event.type == pygame.MOUSEMOTION:
