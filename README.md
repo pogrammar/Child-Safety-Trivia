@@ -10,7 +10,7 @@ Welcome to the Child Safety Trivia Game, where you'll navigate through challengi
 
 
 ## Installation
-You can directly go to the [releases](https://github.com/pogrammar/Child-Safety-Trivia/releases/) tab and install the .exe of the latest version, or you can:
+You can directly go to the [releases](https://github.com/pogrammar/Child-Safety-Trivia/releases/) tab and install the .exe of the latest version (along with the entire zip file), or you can:
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/child-safety-trivia-game.git
