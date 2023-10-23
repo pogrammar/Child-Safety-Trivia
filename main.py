@@ -10,6 +10,7 @@ pygame.init()
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 HOVER_COLOR = (200, 200, 200) 
+HOVER_SCALE = 1.05
 clock = pygame.time.Clock()
 # Set up the display
 screen = pygame.display.set_mode((1280, 720), RESIZABLE)
@@ -93,7 +94,13 @@ def display_question(question_data, hovered_option):
         option_rect = option_text.get_rect(topleft=(50, y_position))
 
         if hovered_option == option_index:
+            # Apply a colorful hover animation
             pygame.draw.rect(screen, HOVER_COLOR, option_rect.inflate(20, 10), border_radius=10)
+            option_text = font.render(option, True, WHITE)  # Change text color when hovered
+            scaled_width = int(option_rect.width * HOVER_SCALE)
+            scaled_height = int(option_rect.height * HOVER_SCALE)
+            scaled_text = pygame.transform.scale(option_text, (scaled_width, scaled_height))
+            option_rect = scaled_text.get_rect(topleft=(50, y_position))
         else:
             pygame.draw.rect(screen, WHITE, option_rect.inflate(20, 10), border_radius=10)
 
@@ -101,6 +108,7 @@ def display_question(question_data, hovered_option):
         y_position += 60
 
     pygame.display.flip()
+
 question_index = 0
 
 
