@@ -21,10 +21,6 @@ lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
 
-def finish():
-    if player.x > 1280:
-        screen.blit(win, (0,0))
-
 
 child_safety_questions = {
     "Q1": {
@@ -127,10 +123,30 @@ all_sprites.add(player)
 def check_collision():
     if player.hitbox[1] < enemy.hitbox[1] + enemy.hitbox[3] and enemy.hitbox[1] + enemy.hitbox[3] > enemy.hitbox[1]:
             if player.hitbox[0] + player.hitbox[2] > enemy.hitbox[0] and player.hitbox[0] < enemy.hitbox[0] + enemy.hitbox[2]:
-                enemy.state_run = False
-                player.right = False
                 screen.blit(lose, (0,0))
+                pygame.display.update()
+                pygame.time.delay(2000)
+                reset_game()
+                screen.blit(bg, (0, 0))
+                if current_question_index < len(questions):
+                    display_question(questions[current_question_index], hovered_option)
+def reset_game():
+    global current_question_index
+    current_question_index = 0
+    player.x = 200
+    enemy.x = 10
 
+def finish():
+    if player.x > 1280:
+        screen.blit(win, (0,0))
+        pygame.display.update()
+        pygame.time.delay(2000)  # Display the "You Win" screen for 2 seconds
+        reset_game()  # Reset the game
+        screen.blit(bg, (0, 0))  # Clear the screen
+
+        # Check if you have more questions to display
+        if current_question_index < len(questions):
+            display_question(questions[current_question_index], hovered_option)
 
 
 while True:
@@ -184,7 +200,6 @@ while True:
 
                 else:
                     enemy.x += 100
-                    crate_img_x = 1280
                     
 
     screen.blit(bg, (0, 0))
@@ -222,7 +237,7 @@ while True:
     finish()
     check_collision()
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(30)
     
 
 pygame.quit()
