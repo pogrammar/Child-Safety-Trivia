@@ -1,7 +1,7 @@
 import pygame
 
 screen = pygame.display.set_mode((1280, 720))
-
+clock = pygame.time.Clock()
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, width, height):
         super().__init__()
@@ -10,12 +10,14 @@ class Enemy(pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.run = [
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/1.png'), (self.width, self.height)),
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/2.png'), (self.width, self.height)),
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/3.png'), (self.width, self.height)),
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/4.png'), (self.width, self.height)),
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/5.png'), (self.width, self.height)),
-            pygame.transform.scale(pygame.image.load(f'assets/Enemy/6.png'), (self.width, self.height))
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/1.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/2.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/3.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/4.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/5.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/6.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/7.png'), (self.width, self.height)),
+            pygame.transform.scale(pygame.image.load(f'assets/Enemy/run/8.png'), (self.width, self.height))
         ]
         self.state_run = True
         self.walkCount = 0
@@ -31,3 +33,4 @@ class Enemy(pygame.sprite.Sprite):
             screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
             self.walkCount += 1
             self.hitbox = (self.x + 55, self.y + 70, 70, 170)
+        clock.tick(30)

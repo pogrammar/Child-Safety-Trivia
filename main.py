@@ -107,8 +107,6 @@ def display_question(question_data, hovered_option):
         screen.blit(option_text, option_rect)
         y_position += 60
 
-    pygame.display.flip()
-
 question_index = 0
 
 
@@ -121,7 +119,7 @@ all_sprites = pygame.sprite.Group()
 enemy_sprites = pygame.sprite.Group()
 player_sprite = pygame.sprite.GroupSingle()
 
-enemy = Enemy(200, 200)
+enemy = Enemy(250, 250)
 enemy_sprites.add(enemy)
 all_sprites.add(enemy)
 
@@ -245,7 +243,7 @@ while True:
     finish()
     check_collision()
     pygame.display.update()
-    clock.tick(30)
+    clock.tick(64)
     
 
 pygame.quit()
