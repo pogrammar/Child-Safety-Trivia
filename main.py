@@ -243,7 +243,7 @@ while True:
     finish()
     check_collision()
     pygame.display.update()
-    clock.tick(64)
+    clock.tick(32)
     
 
 pygame.quit()

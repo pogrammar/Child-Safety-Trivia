@@ -29,8 +29,9 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = pygame.draw.rect(screen, (255,0,0), self.hitbox,2)
 
     def draw(self, screen):
+        if self.walkCount + 1 >= 64:
+            self.walkCount = 0
         if self.state_run:
             screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
             self.walkCount += 1
             self.hitbox = (self.x + 55, self.y + 70, 70, 170)
-        clock.tick(30)

@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
 
         
     def draw(self, screen):
-        if self.walkCount + 1 >= 27:
+        if self.walkCount + 1 >= 64:
             self.walkCount = 0
         if self.right:
             screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
