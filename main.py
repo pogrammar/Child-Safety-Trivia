@@ -14,14 +14,18 @@ HOVER_SCALE = 1.05
 clock = pygame.time.Clock()
 # Set up the display
 screen = pygame.display.set_mode((1280, 720), RESIZABLE)
-bg = pygame.display.set_caption("Child Safety Trivia")
+screen_x, screen_y = screen.get_size()
+a = pygame.display.set_caption("Child Safety Trivia")
 
-# Define fonts
+global win
+global lose
+global bg
+global floor
 win = pygame.image.load('assets/you_win.png').convert_alpha()
 lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
-
+floor = pygame.image.load("assets/floor.png").convert_alpha()
 
 child_safety_questions = {
     "Q1": {
@@ -134,6 +138,7 @@ def check_collision():
                 pygame.time.delay(2000)
                 reset_game()
                 screen.blit(bg, (0, 0))
+                screen.blit(floor, (0, 720))
                 if current_question_index < len(questions):
                     display_question(questions[current_question_index], hovered_option)
 def reset_game():
@@ -164,9 +169,17 @@ while True:
             
         if event.type == pygame.VIDEORESIZE:
             # Handle window resizing event
+            
             new_width, new_height = event.size
+            screen_x, screen_y = new_width, new_height
             # Adjust your game's content to fit the new window dimensions
-            screen = pygame.display.set_mode((new_width, new_height), RESIZABLE)
+            bg = pygame.transform.scale(pygame.image.load("assets/bg.png").convert_alpha(), (new_width, new_height))
+            screen.blit(bg, (0, 0))
+            floor = pygame.transform.scale_by(pygame.image.load("assets/floor.png").convert_alpha(), (new_width, 1))
+            screen.blit(floor, (0, 0))
+            
+            win = pygame.transform.scale(pygame.image.load('assets/you_win.png').convert_alpha(), (new_width, new_height))
+            lose = pygame.transform.scale(pygame.image.load('assets/lose.png').convert_alpha(), (new_width, new_height))
 
 
         if event.type == pygame.MOUSEMOTION:
@@ -209,6 +222,7 @@ while True:
                     
 
     screen.blit(bg, (0, 0))
+    screen.blit(floor, (0, 0))
 
     if current_question_index < len(questions):
         display_question(questions[current_question_index], hovered_option)
@@ -236,7 +250,6 @@ while True:
     player.draw(screen)
     player.right = True
     player.standing = False
-
     enemy.draw(screen)
     enemy.right = True
     enemy.standing = False

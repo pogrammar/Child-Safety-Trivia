@@ -6,7 +6,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, width, height):
         super().__init__()
         self.x = 10
-        self.y = 320
+        self.y = 300
         self.width = width
         self.height = height
         self.run = [
@@ -29,7 +29,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = pygame.draw.rect(screen, (255,0,0), self.hitbox,2)
 
     def draw(self, screen):
-        if self.walkCount + 1 >= 64:
+        if self.walkCount + 1 >= 32:
             self.walkCount = 0
         if self.state_run:
             screen.blit(self.run[self.walkCount // 2 % len(self.run)], (self.x, self.y))
