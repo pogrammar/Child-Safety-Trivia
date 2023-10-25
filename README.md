@@ -1,4 +1,4 @@
-<h1 align='center'> Child Safety Trivia Game </h1>
+<h1 align='center'> Child Safety Trivia Game (yet to be updated) </h1>
 
 <h6 align='center'> Winner of the First Prize at DPS Bangalore E-city's Interschool Competition "SHRISHTI" - 2023 under the Event "NIRMAN - The Game Creators"</h6>
 <h5 align='center'>
@@ -10,13 +10,13 @@ Welcome to the Child Safety Trivia Game, where you'll navigate through challengi
 
 
 ## Installation
-You can directly go to the [releases](https://github.com/pogrammar/Child-Safety-Trivia/releases/) tab and install the .exe of the latest version (along with the entire zip file), or you can:
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/child-safety-trivia-game.git
    cd child-safety-trivia-game
 2. Ensure you have Python and Pygame installed:
-   - [Python installation](https://www.python.org/downloads/)
+   - [Python installation](https://www.google.com](https://www.python.org/downloads/)https://www.python.org/downloads/)
    - Install Pygame: `pip install pygame`
 3. Run the game:
      ```bash
@@ -40,6 +40,3 @@ You find yourself in a dangerous situation, where a kidnapper is chasing you. Yo
 
 ## Feedback 
 We welcome your feedback and suggestions for improving the game. Feel free to open an issue on the GitHub repository if you encounter any bugs, have ideas for enhancements, or simply want to share your thoughts.
-
-## Note
-As of now, this game has no "Play again"  functionality. Due to the creators having independent, over-occupied lives, any other functionality will be added, or any feedback will be taken into any consideration only if we have the time to. Currently, this game as no errors. 
