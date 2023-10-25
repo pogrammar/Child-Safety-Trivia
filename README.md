@@ -1,4 +1,4 @@
-<h1 align='center'> Child Safety Trivia Game (yet to be updated) </h1>
+<h1 align='center'> Child Safety Trivia Game ( readme yet to be updated) </h1>
 
 <h6 align='center'> Winner of the First Prize at DPS Bangalore E-city's Interschool Competition "SHRISHTI" - 2023 under the Event "NIRMAN - The Game Creators"</h6>
 <h5 align='center'>
