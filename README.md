@@ -1,8 +1,8 @@
-<h1 align='center'> Child Safety Trivia Game ( readme yet to be updated) </h1>
+<h1 align='center'> Child Safety Trivia Game</h1>
 
-<h6 align='center'> Winner of the First Prize at DPS Bangalore E-city's Interschool Competition "SHRISHTI" - 2023 under the Event "NIRMAN - The Game Creators"</h6>
+<h6 align='center'> Winner of the First Prize at DPS Bangalore E-city's Interschool Competition "SHRISHTI" - 2023 under the Event "NIRMAN - The Game Creators" (v1.0)</h6>
 <h5 align='center'>
-Welcome to the Child Safety Trivia Game, where you'll navigate through challenging questions and escape from a kidnapper while learning important child safety lessons. In this game, you'll need to make quick decisions and answer correctly to outsmart your captor and ensure your escape.
+Welcome to the Child Safety Trivia Game, where you'll navigate through challenging questions and escape from a monster while learning important child safety lessons. In this game, you'll need to make quick decisions and answer correctly to outsmart your captor and ensure your escape.
 </h5>
 <p align="center">
     <img src="https://github.com/pogrammar/Child-Safety-Trivia/blob/master/assets/Snapshot.png" alt="Game snapshot" width="400" height="224"/>
@@ -10,26 +10,26 @@ Welcome to the Child Safety Trivia Game, where you'll navigate through challengi
 
 
 ## Installation
-
+You could just install the zip file "Child-Safety-Trivia.zip" from the releases, or
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/child-safety-trivia-game.git
    cd child-safety-trivia-game
 2. Ensure you have Python and Pygame installed:
-   - [Python installation](https://www.google.com](https://www.python.org/downloads/)https://www.python.org/downloads/)
+   - [Python installation](https://www.python.org/downloads/)
    - Install Pygame: `pip install pygame`
 3. Run the game:
      ```bash
      python main.py
 
 ## Gameplay
-You find yourself in a dangerous situation, where a kidnapper is chasing you. Your goal is to answer a series of child safety questions correctly to escape. 
+You find yourself in a dangerous situation, where a Monster is chasing you. Your goal is to answer a series of child safety questions correctly to escape. 
 
 ## How to play
 1. Pay close attention to the questions presented on the screen.
 2. Hover over the answer options to highlight your choice.
 3. Click on the correct answer to progress.
-4. Incorrect answers might lead to the kidnapper getting closer.
+4. Incorrect answers might lead to the monster getting closer.
 5. Escape the danger by answering all questions correctly and outsmarting the captor.
 
 ## Credits
