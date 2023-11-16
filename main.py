@@ -3,6 +3,8 @@ import sys
 from sprites.player import Player
 from sprites.enemy import Enemy
 from pygame.locals import RESIZABLE
+from questions import child_safety_questions
+import random
 # Initialize Pygame
 pygame.init()
 
@@ -28,60 +30,6 @@ lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
 bg = pygame.image.load("assets/bg.png").convert_alpha()
 floor = pygame.image.load("assets/floor.png").convert_alpha()
-
-child_safety_questions = {
-    "Q1": {
-        "question": "Q1) What should you do when crossing the street?",
-        "options": ["Run as fast as you can", "Look both ways before crossing", "Text on your phone", "Close your eyes and cross"],
-        "correct_answer": "Look both ways before crossing"
-    },
-    "Q2": {
-        "question": "Q2) Who should you talk to if a stranger approaches you?",
-        "options": ["Tell them your name", "Run away", "Find a trusted adult", "Give them your address"],
-        "correct_answer": "Find a trusted adult"
-    },
-    "Q3": {
-        "question": "Q3) Why is it important to wear a helmet when riding a bike?",
-        "options": ["Because it looks cool", "To protect your head in case of a fall", "To carry things on your head", "To see better"],
-        "correct_answer": "To protect your head in case of a fall"
-    },
-    "Q4": {
-        "question": "Q4) What information should you avoid sharing online?",
-        "options": ["Your favorite color", "Your full name, address, and phone number", "Your school's name", "Your favorite food"],
-        "correct_answer": "Your full name, address, and phone number"
-    },
-    "Q5": {
-        "question": "Q5) What should you do if you're home alone and the doorbell rings?",
-        "options": ["Open the door for anyone", "Answer the door and invite them in", "Don't open the door and stay quiet", "Shout loudly and ask who's there"],
-        "correct_answer": "Don't open the door and stay quiet"
-    },
-    "Q6": {
-        "question": "Q6) What's the first thing you should do in case of a fire?",
-        "options": ["Start cooking marshmallows", "Call your friends", "Sound the alarm and exit the building", "Take a nap"],
-        "correct_answer": "Sound the alarm and exit the building"
-    },
-    "Q7": {
-        "question": "Q7) Why is it important to wear a seatbelt in a car?",
-        "options": ["To keep your clothes clean", "To show off to your friends", "To avoid getting a ticket", "To stay safe in case of an accident"],
-        "correct_answer": "To stay safe in case of an accident"
-    },
-    "Q8": {
-        "question": "Q8) What should you do if you get lost in a public place?",
-        "options": ["Hide and wait for someone to find you", "Start screaming loudly", "Approach a security guard or a trusted adult", "Try to find your way home on your own"],
-        "correct_answer": "Approach a security guard or a trusted adult"
-    },
-    "Q9": {
-        "question": "Q9) Why is it important to wash your hands?",
-        "options": ["To waste water", "To make them smell nice", "To get rid of germs and stay healthy", "To impress your parents"],
-        "correct_answer": "To get rid of germs and stay healthy"
-    },
-    "Q10": {
-        "question": "Q10) What's the best way to stay safe around the swimming pool?",
-        "options": ["Run and jump into the pool", "Push your friends into the pool for fun", "Stay away from the pool", "Follow the rules and ask an adult for supervision"],
-        "correct_answer": "Follow the rules and ask an adult for supervision"
-    }
-}
-
 
 
 
@@ -120,6 +68,7 @@ player = Player(100, 100)
 enemy = Enemy(200, 200)
 current_question_index = 0
 questions = list(child_safety_questions.values())
+random.shuffle(questions)
 
 all_sprites = pygame.sprite.Group()
 enemy_sprites = pygame.sprite.Group()
@@ -149,6 +98,7 @@ def reset_game():
     current_question_index = 0
     player.x = 200
     enemy.x = 10
+    random.shuffle(questions) 
 
 def finish():
     if player.x > 1280:
