@@ -21,6 +21,8 @@ global win
 global lose
 global bg
 global floor
+
+htp = pygame.image.load('assets/Howtoplay.png').convert_alpha()
 win = pygame.image.load('assets/you_win.png').convert_alpha()
 lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
@@ -123,6 +125,7 @@ all_sprites = pygame.sprite.Group()
 enemy_sprites = pygame.sprite.Group()
 player_sprite = pygame.sprite.GroupSingle()
 
+htpdisplayed = True
 enemy = Enemy(250, 250)
 enemy_sprites.add(enemy)
 all_sprites.add(enemy)
@@ -160,7 +163,11 @@ def finish():
             display_question(questions[current_question_index], hovered_option)
 
 
+###Main
+global hovered_option
+hovered_option = None
 while True:
+    
     keys = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -181,84 +188,88 @@ while True:
             win = pygame.transform.scale(pygame.image.load('assets/you_win.png').convert_alpha(), (new_width, new_height))
             lose = pygame.transform.scale(pygame.image.load('assets/lose.png').convert_alpha(), (new_width, new_height))
 
-
+        if keys[pygame.K_ESCAPE]:
+            print('keypress registered')
+            if htpdisplayed:
+                htpdisplayed = False
         if event.type == pygame.MOUSEMOTION:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if not htpdisplayed:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
 
-            if current_question_index < len(questions):
-                global hovered_option
-                hovered_option = None
+                if current_question_index < len(questions):
 
-                for option_index, option_y in enumerate(range(150, 350, 50)):
-                    if option_y <= mouse_y < option_y + 50:
-                        
-                        hovered_option = option_index
-                        break
+                    hovered_option = questions[current_question_index]["correct_answer"]
+
+                    for option_index, option_y in enumerate(range(150, 350, 50)):
+                        if option_y <= mouse_y < option_y + 50:
+                            
+                            hovered_option = option_index
+                            break
         
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            
-            if current_question_index < len(questions):
-                correct_answer = questions[current_question_index]["correct_answer"]
-                if 150 <= mouse_y <= 200:
-                    global chosen_option
-                    chosen_option = questions[current_question_index]["options"][0]
-                elif 200 <= mouse_y <= 250:
-                    chosen_option = questions[current_question_index]["options"][1]
-                elif 250 <= mouse_y <= 300:
-                    chosen_option = questions[current_question_index]["options"][2]
-                elif 250 <= mouse_y <= 350:
-                    chosen_option = questions[current_question_index]["options"][3]
-                else:
-                    chosen_option = None
+            if not htpdisplayed:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
                 
-                if chosen_option == correct_answer and 150 <= mouse_y <= 350:
-                    current_question_index += 1
-                    player.x += 110
-                    finish()
-
-                else:
-                    enemy.x += 100
+                if current_question_index < len(questions):
+                    correct_answer = questions[current_question_index]["correct_answer"]
+                    if 150 <= mouse_y <= 200:
+                        global chosen_option
+                        chosen_option = questions[current_question_index]["options"][0]
+                    elif 200 <= mouse_y <= 250:
+                        chosen_option = questions[current_question_index]["options"][1]
+                    elif 250 <= mouse_y <= 300:
+                        chosen_option = questions[current_question_index]["options"][2]
+                    elif 250 <= mouse_y <= 350:
+                        chosen_option = questions[current_question_index]["options"][3]
+                    else:
+                        chosen_option = None
                     
+                    if chosen_option == correct_answer and 150 <= mouse_y <= 350:
+                        current_question_index += 1
+                        player.x += 110
+                        finish()
 
-    screen.blit(bg, (0, 0))
-    screen.blit(floor, (0, 0))
+                    else:
+                        enemy.x += 100
+                    
+    screen.blit(htp, (0, 0))
+    if not htpdisplayed:
+        screen.blit(bg, (0, 0))
+        screen.blit(floor, (0, 0))
 
-    if current_question_index < len(questions):
-        display_question(questions[current_question_index], hovered_option)
-    else:
-        # Display game over or next level screen
-        pass
-
-    if not player.isJump:
-        if keys[pygame.K_SPACE]:
-            player.isJump = True
-            player.right = False
-            player.walkCount = 0
-
-    else:
-        if player.jumpCount >= -10:
-            neg = 1
-            if player.jumpCount < 0:
-                neg = -1
-            player.y -= (player.jumpCount ** 2) * 0.4 * neg
-            player.jumpCount -= 1
+        if current_question_index < len(questions):
+            display_question(questions[current_question_index], hovered_option)
         else:
-            player.isJump = False
-            player.jumpCount = 10
-    
-    player.draw(screen)
-    player.right = True
-    player.standing = False
-    enemy.draw(screen)
-    enemy.right = True
-    enemy.standing = False
-    finish()
-    check_collision()
+            # Display game over or next level screen
+            pass
+
+        if not player.isJump:
+            if keys[pygame.K_SPACE]:
+                player.isJump = True
+                player.right = False
+                player.walkCount = 0
+
+        else:
+            if player.jumpCount >= -10:
+                neg = 1
+                if player.jumpCount < 0:
+                    neg = -1
+                player.y -= (player.jumpCount ** 2) * 0.4 * neg
+                player.jumpCount -= 1
+            else:
+                player.isJump = False
+                player.jumpCount = 10
+        
+        player.draw(screen)
+        player.right = True
+        player.standing = False
+        enemy.draw(screen)
+        enemy.right = True
+        enemy.standing = False
+        finish()
+        check_collision()
     pygame.display.update()
     clock.tick(32)
     
 
 pygame.quit()
-
-
