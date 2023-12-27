@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
             pygame.transform.scale(pygame.image.load(f'assets/player/running/7.png'), (self.width, self.height)),
             pygame.transform.scale(pygame.image.load(f'assets/player/running/8.png'), (self.width, self.height))
         ]
+
         self.jump = [
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/1.png'), (self.width, self.height)),
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/2.png'), (self.width, self.height)),
@@ -32,6 +33,7 @@ class Player(pygame.sprite.Sprite):
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/10.png'), (self.width, self.height)),
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/11.png'), (self.width, self.height))
         ]
+        
         self.image = self.run[0]  # the first image of the list is the standing image
           # set x and y of rect to x and y of image
 

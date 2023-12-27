@@ -3,10 +3,10 @@ import pygame
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, width, height):
+    def __init__(self,x, y, width, height):
         super().__init__()
-        self.x = 10
-        self.y = 300
+        self.x = x
+        self.y = y
         self.width = width
         self.height = height
         self.run = [

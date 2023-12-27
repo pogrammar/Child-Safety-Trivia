@@ -3,11 +3,10 @@ import sys
 
 global win
 global lose
-global bg
 
 from sprites.player import Player
 from sprites.enemy import Enemy
-from questionconfig import ezQuestions
+from questionconfig import ezQuestions, hardQuestions
 
 from pygame.locals import RESIZABLE
 #from pygame import mixer
@@ -30,41 +29,49 @@ htp = pygame.image.load('assets/Howtoplay.png').convert_alpha()
 win = pygame.image.load('assets/you_win.png').convert_alpha()
 lose = pygame.image.load('assets/lose.png').convert_alpha()
 font = pygame.font.Font(None, 36)
-bg = pygame.image.load("assets/bg.png").convert_alpha()
+bg1 = pygame.transform.scale(pygame.image.load("assets/bg1.jpg").convert_alpha(), (1280, 720))
+bg2 = pygame.transform.scale(pygame.image.load("assets/bg2.png").convert_alpha(), (1280, 720))
 
-#gameover = pygame.mixer.Sound("music/Game_over.wav")
-
-
+gameover = pygame.mixer.Sound("music/Game_over.wav")
+ansright = pygame.mixer.Sound("music/game-start-6104.mp3")
+answrong = pygame.mixer.Sound("music/mixkit-losing-bleeps-2026.wav")
+winsound = pygame.mixer.Sound("music/mixkit-ethereal-fairy-win-sound-2019.wav")
 
 
 ezquestions = ezQuestions()
+hardquestions = hardQuestions()
 
-player = Player(100, 100) 
-enemy = Enemy(200, 200)
+
+level1 = True
+level2 = False
+
 
 random.shuffle(ezquestions.ezquestions)
+random.shuffle(hardquestions.hardquestions)
+
 
 all_sprites = pygame.sprite.Group()
 enemy_sprites = pygame.sprite.Group()
 player_sprite = pygame.sprite.GroupSingle()
 
 htpdisplayed = True
-enemy = Enemy(250, 250)
+
+enemy = Enemy(10, 330, 200, 200)
 enemy_sprites.add(enemy)
 all_sprites.add(enemy)
 
-player = Player(100, 100)
+player = Player(200, 435, 100, 100)
 player_sprite.add(player)
 all_sprites.add(player)
 def check_collision():
     if player.hitbox[1] < enemy.hitbox[1] + enemy.hitbox[3] and enemy.hitbox[1] + enemy.hitbox[3] > enemy.hitbox[1]:
             if player.hitbox[0] + player.hitbox[2] > enemy.hitbox[0] and player.hitbox[0] < enemy.hitbox[0] + enemy.hitbox[2]:
-                #pygame.mixer.Sound.play(gameover)
+                pygame.mixer.Sound.play(gameover)
                 screen.blit(lose, (0,0))
                 pygame.display.update()
                 pygame.time.delay(2000)
                 reset_game()
-                screen.blit(bg, (0, 0))
+                screen.blit(bg1, (0, 0))
                 if current_question_index < len(ezquestions.ezquestions):
                     ezquestions.display_question(ezquestions.ezquestions[ezquestions.current_question_index], hovered_option)
 def reset_game():
@@ -76,10 +83,11 @@ def reset_game():
 def finish():
         if player.x > 1280:
             screen.blit(win, (0,0))
+            pygame.mixer.Sound.play(winsound)
             pygame.display.update()
             pygame.time.delay(2000)  # Display the "You Win" screen for 2 seconds
             reset_game()  # Reset the game
-            screen.blit(bg, (0, 0))  # Clear the screen
+            screen.blit(bg1, (0, 0))  # Clear the screen
 
             # Check if you have more questions to display
             if ezquestions.current_question_index < len(ezquestions.ezquestions):
@@ -96,17 +104,7 @@ while True:
             pygame.quit()
             sys.exit()
             
-        if event.type == pygame.VIDEORESIZE:
-            # Handle window resizing event
-            
-            new_width, new_height = event.size
-            screen_x, screen_y = new_width, new_height
-            # Adjust your game's content to fit the new window dimensions
-            bg = pygame.transform.scale(pygame.image.load("assets/bg.png").convert_alpha(), (new_width, new_height))
-            screen.blit(bg, (0, 0))
-            
-            win = pygame.transform.scale(pygame.image.load('assets/you_win.png').convert_alpha(), (new_width, new_height))
-            lose = pygame.transform.scale(pygame.image.load('assets/lose.png').convert_alpha(), (new_width, new_height))
+        
 
         if keys[pygame.K_ESCAPE]:
             print('keypress registered')
@@ -114,26 +112,58 @@ while True:
                 htpdisplayed = False
         if event.type == pygame.MOUSEMOTION:
             if not htpdisplayed:
-                ezquestions.get_hovered_option()
+                if level1:
+                    ezquestions.get_hovered_option()
+                if level2:
+                    hardquestions.get_hovered_option()
                 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if not htpdisplayed:
-                anscheck = ezquestions.get_clicked_option()
-                if anscheck == True:
-                    player.x += 110
-                    ezquestions.display_question(ezquestions.ezquestions[ezquestions.current_question_index], hovered_option)
-                    finish()
-                if anscheck == False:
-                    enemy.x += 100
+                if level1:
+                    anscheck = ezquestions.get_clicked_option()
+                    if anscheck == True:
+                        pygame.mixer.Sound.play(ansright)
+                        player.x += 110
+                        ezquestions.display_question(ezquestions.ezquestions[ezquestions.current_question_index], hovered_option)
+                        if player.x > 1280:
+                            level1 = False
+                            level2 = True
+                            level3 = False
+                    if anscheck == False:
+                        pygame.mixer.Sound.play(answrong)
+                        enemy.x += 100
+                if level2:
+                    anscheck = hardquestions.get_clicked_option()
+                    if anscheck == True:
+                        pygame.mixer.Sound.play(ansright)
+                        player.x += 110
+                        hardquestions.display_question(hardquestions.hardquestions[hardquestions.current_question_index], hovered_option)
+                        finish()
+                        
+                    if anscheck == False:
+                        pygame.mixer.Sound.play(answrong)
+                        enemy.x += 100
                     
-    screen.blit(htp, (0, 0))
+    if htpdisplayed:                
+        screen.blit(htp, (0, 0))
     if not htpdisplayed:
-        screen.blit(bg, (0, 0))
-        if ezquestions.current_question_index < len(ezquestions.ezquestions):
-            ezquestions.display_question(ezquestions.ezquestions[ezquestions.current_question_index], hovered_option)
-        else:
-            # Display game over or next level screen
-            pass
+        if level1:
+            screen.blit(bg1, (0, 0))
+            if ezquestions.current_question_index < len(ezquestions.ezquestions):
+                ezquestions.display_question(ezquestions.ezquestions[ezquestions.current_question_index], hovered_option)
+                if player.x > 1280:
+                    level1 = False
+                    level2 = True
+
+        if level2:
+            screen.blit(bg2, (0, 0))
+            if hardquestions.current_question_index < len(hardquestions.hardquestions):
+                hardquestions.display_question(hardquestions.hardquestions[hardquestions.current_question_index], hovered_option)
+                if player.x > 1280:
+                    level1 = False
+                    level2 = False
+
+        
 
         if not player.isJump:
             if keys[pygame.K_SPACE]:
