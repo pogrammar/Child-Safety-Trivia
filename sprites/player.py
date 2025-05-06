@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
             pygame.transform.scale(pygame.image.load(f'assets/player/jumping/11.png'), (self.width, self.height))
         ]
         
-        self.image = self.run[0]  # the first image of the list is the standing image
+        self.image = self.run[0]  # t   he first image of the list is the standing image
           # set x and y of rect to x and y of image
 
 
@@ -45,7 +45,6 @@ class Player(pygame.sprite.Sprite):
         self.gravity = 0
         self.hitbox = (self.x + 20, self.y + 11, 45, 70)
 
-        
     def draw(self, screen):
         if self.walkCount + 1 >= 32:
             self.walkCount = 0

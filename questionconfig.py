@@ -106,7 +106,6 @@ class ezQuestions():
             else:
                 return False
             
-
 class hardQuestions():
     def __init__(self) -> None:
         self.hardquestions = list(child_safety_questions_hard.values())
