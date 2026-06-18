@@ -8,7 +8,8 @@ import random
 pygame.font.init()
 screen = pygame.display.set_mode((1280, 720))
 font = pygame.font.Font(None, 36)
-bg = pygame.image.load("assets/bg.png").convert_alpha()
+bg1 = pygame.image.load("assets/bg1.jpg").convert_alpha()
+bg2 = pygame.image.load("assets/bg2.png").convert_alpha()
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -23,7 +24,7 @@ class ezQuestions():
         self.current_question_index = 0
         self.hovered_option = None
         self.player = Player(100, 100)
-        self.enemy = Enemy(200, 200)
+        self.enemy = Enemy(200, 200, 100, 100)
 
     def display_question(self, question_data, hovered_option):
         question = question_data["question"]
@@ -75,7 +76,7 @@ class ezQuestions():
             pygame.display.update()
             pygame.time.delay(2000)  # Display the "You Win" screen for 2 seconds
             self.reset_game()  # Reset the game
-            screen.blit(bg, (0, 0))  # Clear the screen
+            screen.blit(bg1, (0, 0))  # Clear the screen
 
             # Check if you have more questions to display
             if self.current_question_index < len(self.ezquestions):
@@ -113,7 +114,7 @@ class hardQuestions():
         self.current_question_index = 0
         self.hovered_option = None
         self.player = Player(100, 100)
-        self.enemy = Enemy(200, 200)
+        self.enemy = Enemy(200, 200, 100, 100)
 
     def display_question(self, question_data, hovered_option):
         question = question_data["question"]
@@ -165,7 +166,7 @@ class hardQuestions():
             pygame.display.update()
             pygame.time.delay(2000)  # Display the "You Win" screen for 2 seconds
             self.reset_game()  # Reset the game
-            screen.blit(bg, (0, 0))  # Clear the screen
+            screen.blit(bg2, (0, 0))  # Clear the screen
 
             # Check if you have more questions to display
             if self.current_question_index < len(self.hardquestions):

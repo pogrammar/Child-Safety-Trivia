@@ -60,7 +60,7 @@ enemy = Enemy(10, 330, 200, 200)
 enemy_sprites.add(enemy)
 all_sprites.add(enemy)
 
-player = Player(200, 435, 100, 100)
+player = Player(100, 100)
 player_sprite.add(player)
 all_sprites.add(player)
 def check_collision():
